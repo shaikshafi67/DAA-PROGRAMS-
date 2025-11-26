@@ -1,0 +1,14 @@
+
+def activitySelection(s,e):
+    arr=list(zip(s,e))
+    arr.sort(key=lambda x:x[1])
+    count=1
+    j=0
+    for i in range(1,len(arr)):
+        if arr[i][0] > arr[j][1]:
+            count +=1
+    return count
+
+start_time= [1,2,3,0,5,8,5]
+end_time= [2,4,6,7,9,9]
+print(activitySelection(start_time,end_time))
