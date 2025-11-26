@@ -1,0 +1,20 @@
+def fractional_knapsack(items, capacity):
+    # items: list of (value, weight)
+    items = sorted(items, key=lambda x: x[0]/x[1], reverse=True)
+
+    total_value = 0.0
+    for value, weight in items:
+        if capacity == 0:
+            break
+        if weight <= capacity:
+            total_value += value
+            capacity -= weight
+        else:
+            total_value += value * (capacity / weight)
+            capacity = 0
+
+    return total_value
+
+# Example
+items = [(60, 10), (100, 20), (120, 30)]
+print(fractional_knapsack(items, 50))  # 240.0
