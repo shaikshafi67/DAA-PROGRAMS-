@@ -1,0 +1,30 @@
+
+def merge_sort(arr):
+    if(len(arr)<=1):
+        return arr
+    mid=len(arr)//2
+    left=arr[:mid]
+    right=arr[mid:]
+    left=merge_sort(left)
+    right=merge_sort(right)
+    return merged(left,right)
+
+def merged(left,right):
+    merge=[]
+    i=j=0
+    while i<len(left) and j<len(right):
+        if(left[i]<right[j]):
+            merge.append(left[i])
+            i=i+1
+        else:
+            merge.append(right[j])
+            j=j+1
+    while(i<len(left)):
+        merge.append(left[i])
+        i=i+1
+    while(j<len(right)):
+        merge.append(right[j])
+        j=j+1  
+    return merge 
+arr=[1,7,6,4,3]
+print(merge_sort(arr))
