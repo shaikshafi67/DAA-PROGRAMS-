@@ -1,0 +1,13 @@
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]      # Current element
+        j = i - 1
+        # Shift elements of arr[0..i-1] that are greater than key
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key   # Insert key at correct position
+#example
+arr = [5, 3, 4, 1, 2]
+insertion_sort(arr)
+print("Sorted Array:", arr)
