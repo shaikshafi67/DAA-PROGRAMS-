@@ -1,0 +1,54 @@
+# N-Queens using efficient bitmask backtracking (counts & prints solutions)
+# Works fast for N up to ~14. Python 3.
+
+import time
+
+def solve_n_queens(n, print_solutions=True):
+    """
+    Returns (count, solutions)
+    solutions: list of lists where each inner list is column indices (0..n-1) for each row
+    """
+    solutions = []
+    count = 0
+    cols = 0
+    diag1 = 0  # \ diagonals
+    diag2 = 0  # / diagonals
+    board = [0] * n  # board[row] = column index
+
+    def backtrack(row, cols, diag1, diag2):
+        nonlocal count
+        if row == n:
+            count += 1
+            solutions.append(board.copy())
+            return
+        # available positions: bits set to 1 are free
+        free = (~(cols | diag1 | diag2)) & ((1 << n) - 1)
+        while free:
+            # pick lowest set bit
+            bit = free & -free
+            free -= bit
+            col = (bit.bit_length() - 1)
+            board[row] = col
+            backtrack(row + 1,
+                      cols | bit,
+                      (diag1 | bit) << 1,
+                      (diag2 | bit) >> 1)
+
+    backtrack(0, cols, diag1, diag2)
+
+    if print_solutions:
+        for idx, sol in enumerate(solutions, 1):
+            print(f"Solution {idx}:")
+            for r in range(n):
+                row_str = ['.'] * n
+                row_str[sol[r]] = 'Q'
+                print(' '.join(row_str))
+            print()
+    return count, solutions
+
+if __name__ == "__main__":
+    N = 8  # change N as you like
+    start = time.time()
+    total, sols = solve_n_queens(N, print_solutions=True)
+    elapsed = time.time() - start
+    print(f"Total solutions for N={N}: {total} (found in {elapsed:.4f} seconds)")
