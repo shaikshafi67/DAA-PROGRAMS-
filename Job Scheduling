@@ -1,0 +1,11 @@
+
+def jobSheduing(p,d):
+    n=len(d)
+    count=0
+    sum_profit=0
+
+    job= sorted(zip(p,d),reverse=True)
+
+    slot= [0] * n
+    for i in range(n):
+        
