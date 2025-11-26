@@ -1,0 +1,32 @@
+def rabin_karp(text, pattern):
+    d = 256  # number of characters in input alphabet
+    q = 101  # a prime number for modulo operations
+    n = len(text)
+    m = len(pattern)
+    h = pow(d, m-1) % q  # high order digit value
+    p = 0  # hash value for pattern
+    t = 0  # hash value for text window
+
+    # Preprocessing: Calculate the hash value of pattern and first window text
+    for i in range(m):
+        p = (d * p + ord(pattern[i])) % q
+        t = (d * t + ord(text[i])) % q
+
+    # Slide the pattern over text one by one
+    for i in range(n - m + 1):
+        # Check hash values of current window and pattern
+        if p == t:
+            # Check characters one by one if hashes match
+            if text[i:i+m] == pattern:
+                print("Pattern found at index:", i)
+        # Calculate hash value for next window of text
+        if i < n - m:
+            t = (d * (t - ord(text[i]) * h) + ord(text[i + m])) % q
+            # Make sure t is positive
+            if t < 0:
+                t += q
+
+# Example usage
+text = "GEEKS FOR GEEKS"
+pattern = "GEEK"
+rabin_karp(text, pattern)
