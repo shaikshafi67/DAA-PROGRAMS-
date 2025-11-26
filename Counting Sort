@@ -1,0 +1,20 @@
+
+arr=list(map(int,input("Enter the numbers separated by space:").split(",")))
+#step:1 Find the max element
+
+max_number=arr[0]
+for i  in range (len(arr)):
+     if (arr[i]>max_number):
+          max_number=arr[i]
+
+#step:2 Initialize count array
+count=[0 for i in range(max_number + 1)]
+
+#step:3 store the count of each element
+for i in range(len(arr)):
+    count[arr[i]] += 1
+
+# Step 4: Print the sorted array   
+for i in range(len(count)):
+    for j in range(count[i]):
+        print(i)
